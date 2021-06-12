@@ -7,7 +7,7 @@ const InfoBar = ({ room }) => (
     <div className="leftInnerContainer">
       {/* <img className="onlineIcon" src={onlineIcon} alt="online icon" /> */}
       <svg className="onlineIcon" height="100" width="100">
-  <circle cx="50" cy="50" r="10" stroke="black" stroke-width="0" fill="#7CFC00" />
+  <circle cx="50" cy="50" r="10" fill="#7CFC00" />
   Sorry, your browser does not support inline SVG.  
 </svg> 
       <h3>{room}</h3>

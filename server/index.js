@@ -11,22 +11,29 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 io.on("connection", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
+
     const { error, newUser } = addUser({ id: socket.id, name, room });
     if (error) {
       return callback(error);
     }
+
     socket.emit("message", {
       user: "admin",
       text: `welcome ${newUser.name} to the room ${newUser.room}`,
     });
+
     socket.broadcast
       .to(newUser.room)
       .emit("message", { user: "admin", text: `${newUser.name} has joined` });
+
+
     socket.join(newUser.room);
+
     io.to(newUser.room).emit("roomData", {
       room: newUser.room,
       users: getUsersInRoom(newUser.room),
     });
+
     callback();
   });
 
@@ -43,6 +50,7 @@ io.on("connection", (socket) => {
         user: "admin",
         text: `${user.name} has left.`,
       });
+      
       io.to(user.room).emit("roomData", {
         room: user.room,
         users: getUsersInRoom(user.room),
